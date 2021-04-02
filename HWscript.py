@@ -22,7 +22,7 @@ def unrar(fileName, dest):
 if __name__ == "__main__":
 #     folderPath = "../hw_test"
     folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
-    startFrom = 0               # start from first student
+    startFrom = 1               # start from first student
     os.chdir(folderPath)
 
     folders = sorted(os.listdir("."))
@@ -46,7 +46,6 @@ if __name__ == "__main__":
         if not file_list[0].endswith(".zip") and not file_list[0].endswith(".rar"):
             print(colored("\t\tUploaded file not a .zip or .rar file!", "red"))
             continue
-        print(colored("\t\tPass!!", "green"))
         
         # upzip .zip or .rar file
         zipFile = file_list[0]
@@ -54,10 +53,15 @@ if __name__ == "__main__":
         dest = name + "_files"
         if not os.path.isdir(dest):
             os.mkdir(dest)
-        if zipFile.endswith(".zip"):
+        if zipFile.endswith(".zip") and zipfile.is_zipfile(zipFile):
             unzip(zipFile, dest)
-        elif zipFile.endswith(".rar"):
+        elif zipFile.endswith(".rar") and rarfile.is_rarfile(zipFile):
             unrar(zipFile, dest)
+        else
+            print(colored("\t\tBroken ZIP file: "+zipFile, "red"))
+            continue
+        
+        print(colored("\t\tPass!!", "green"))    
     
         pdf = name+".pdf"
         nb = name+".ipynb"
