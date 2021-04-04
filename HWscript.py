@@ -28,7 +28,7 @@ def unrar(fileName, dest):
 if __name__ == "__main__":
 #     folderPath = "../hw_test"
     folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
-    startFrom = 15               # start from first student
+    startFrom = 1               # start from first student
     os.chdir(folderPath)
 
     folders = sorted(os.listdir("."))
