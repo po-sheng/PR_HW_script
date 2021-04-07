@@ -1,4 +1,4 @@
 rarfile
 zipfile37
-shutil
 termcolor
+ipynb-py-convert
