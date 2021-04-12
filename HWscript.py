@@ -187,6 +187,7 @@ if __name__ == "__main__":
             ret.wait()
         else:
             refresh_state()
+            shutil.rmtree(dest)
             os.chdir("../")
             continue
         
