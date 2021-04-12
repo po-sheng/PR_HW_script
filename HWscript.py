@@ -126,7 +126,7 @@ if __name__ == "__main__":
         if os.path.exists(py):
             print("\tChecking python coding style...")
 #             ret = subprocess.run(["pycodestyle", "--statistics", "--show-source", "--show-pep8", py], capture_output=True, text=True)
-            ret = subprocess.run(["pycodestyle", "--select=E20, E21, E221, E222, E223, E224, E23, E24, E25, E27", py], 
+            ret = subprocess.run(["pycodestyle", "--select=E20, E21, E23, E24", py], 
                     capture_output=True, text=True)
 
             info_list = ret.stdout.split('\n')
