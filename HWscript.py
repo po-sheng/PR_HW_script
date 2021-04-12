@@ -28,7 +28,7 @@ def unrar(fileName, dest):
 if __name__ == "__main__":
 #     folderPath = "../hw_test"
     folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
-    startFrom = 1               # start from first student
+    startFrom = 8               # start from first student
     os.chdir(folderPath)
 
     folders = sorted(os.listdir("."))
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         # check for missing file
         print("\tChecking for missing file...")
 
-        if os.path.exists(pdf) and os.path.exists(nb) and len(os.listdir(".")) == 2:
+        if os.path.exists(pdf) and (os.path.exists(nb) or os.path.exists(py)) and len(os.listdir(".")) == 2:
             print(colored("\t\tPass!!", "green"))
         else:
             for files in os.listdir("."):
@@ -105,18 +105,18 @@ if __name__ == "__main__":
                     os.rename(glob.glob("*.pdf")[0], pdf)
                 else:
                     print(colored("\t\tLoss PDF file!", "red"))
-            if not os.path.exists(nb):
-                if len(glob.glob("*.ipynb")) != 0:
-                    print(colored("\t\tWrong ipynb file name!", "red"))
-                    os.rename(glob.glob("*.ipynb")[0], nb)
-                elif len(glob.glob("*.py")) != 0:
-                    print(colored("\t\tSubmit .py file instead of .ipynb!", "red"))
-                    os.rename(glob.glob("*.py")[0], py)
+            if not os.path.exists(nb) and not os.path.exists(py):
+                if len(glob.glob("*.ipynb")) != 0 or len(glob.glob("*.py")) != 0:
+                    print(colored("\t\tWrong .py/.ipynb file name!", "red"))
+                    if not os.path.exists(nb) and len(glob.glob("*.ipynb")) != 0:
+                        os.rename(glob.glob("*.ipynb")[0], nb)
+                    if not os.path.exists(py) and len(glob.glob("*.py")) != 0:
+                        os.rename(glob.glob("*.py")[0], py)
                 else:
                     print(colored("\t\tLoss ipynb file!", "red"))
 
         # convert .ipynb to .py
-        if not os.path.exists(py):
+        if not os.path.exists(py) and os.path.exists(nb):
             try:
                 ret = subprocess.run(["ipynb-py-convert", nb, py])
             except:
