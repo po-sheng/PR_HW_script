@@ -16,13 +16,13 @@ The student submit .zip or .rar file contain .ipynb coding file and .pdf writing
 - Whether the code in .ipynb follow the requirement of whitespace rule in PEP8 coding style
 
 # Quick Start
-1. Enter Main program
+### 1. Enter Main program
 ```
 cd PR_HW_script
 vim HWscript.py
 ```
 
-2. modify your own settings in **HWscript.py**
+### 2. modify your own settings in **HWscript.py**
 ```
 import zipFile[python version num] as zipFile
 
@@ -35,7 +35,7 @@ folderPath = <your own path to hw_dir>
 ret = subprocess.Popen("okular", pdf)   # change "okular" to "evince" depends on your PDF reader
 ```
 
-3. Run the program
+### 3. Run the program
 ```
 python3 HWscript.py 1
 ```
