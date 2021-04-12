@@ -42,5 +42,5 @@ python3 HWscript.py 1
 - argv[2] (which is "1" here) represent the index of starting student, from 1 to N
 
 ### 4. Usage
-- Press <Enter> key to pause the program
+- Press < Enter> key to pause the program
 - System call of <Ctrl + c> to stop the program
