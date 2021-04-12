@@ -27,7 +27,10 @@ def unrar(fileName, dest):
     os.chdir(dest)
 
 if __name__ == "__main__":
-    startFrom = int(sys.argv[1])    # start from which student
+    try:
+        startFrom = int(sys.argv[1])    # start from which student
+    except:
+        print(colored("You should specify the int index of student to start as argv!", "red"))
 
 #     folderPath = "../hw_test"
     folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
