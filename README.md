@@ -39,4 +39,4 @@ ret = subprocess.Popen("okular", pdf)   # change "okular" to "evince" depends on
 ```
 python3 HWscript.py 1
 ```
-- "1" represent the index of starting student, from 1 to N
+- argv[2] (which is "1" here) represent the index of starting student, from 1 to N
