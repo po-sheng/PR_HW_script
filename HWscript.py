@@ -1,18 +1,40 @@
 import os
 import sys
 import glob
+import time
+import signal
 import shutil
 import rarfile
-from termcolor import colored       
+import threading
 import subprocess
 import zipfile37 as zipfile
+from termcolor import colored       
 
 
+# thread for detecting stop signal
+def detect_break():
+    ret = input(colored("Press the <Enter> key to pause!\n\n", "yellow"))
+
+# signal (crtl + c) handler
+def sig_handler(sig, frame):
+    global input_thread
+    os.chdir("../")
+    if os.path.exists(glob.glob("*_files")[0]) and os.path.isdir(glob.glob("*_files")[0]):
+        shutil.rmtree(glob.glob("*_files")[0])
+    print(colored("\nStop by signal interrupt!\n", "yellow"))
+    os._exit(1)
+
+# clean up state variable when continue to new student
 def refresh_state():
     os.chdir("../")
-    print()
-    input("Press the <Enter> key to next student...")
+    global input_thread
     
+    print(colored("\nPress the <Enter> key to continue...", "yellow"), flush=True, end="")
+    input_thread.join()
+    input_thread = threading.Thread(target=detect_break)
+    input_thread.start()
+
+# unzip .zip file
 def unzip(fileName, dest):
     zipFile = zipfile.ZipFile(fileName)
     for name in zipFile.namelist():
@@ -20,6 +42,7 @@ def unzip(fileName, dest):
     zipFile.close()
     os.chdir(dest)
 
+# unzip .rar file
 def unrar(fileName, dest):
     rarFile = rarfile.RarFile(fileName)
     rarFile.extractall(dest)
@@ -27,16 +50,25 @@ def unrar(fileName, dest):
     os.chdir(dest)
 
 if __name__ == "__main__":
+    # check argv correct
     try:
         startFrom = int(sys.argv[1])    # start from which student
     except:
         print(colored("You should specify the int index of student to start from as an argv!", "red"))
         exit()
 
-#     folderPath = "../hw_test"
+    # set path
     folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
     os.chdir(folderPath)
+    
+    # set signal handler
+    signal.signal(signal.SIGINT, sig_handler)
 
+    # set break threading
+    input_thread = threading.Thread(target=detect_break)
+    input_thread.start()
+
+    # loop for submit homework
     folders = sorted(os.listdir("."))
     if startFrom <= 0 or startFrom > len(folders):
         print(colored("The range of index should be between [1, {}]".format(len(folders)), "red"))
@@ -153,12 +185,21 @@ if __name__ == "__main__":
 #             ret = subprocess.Popen(["evince", pdf])
             ret = subprocess.Popen(["okular", pdf])
             ret.wait()
+        else:
+            refresh_state()
+            os.chdir("../")
+            continue
         
         # back to original dir and remove extract file
         os.chdir("../")
         shutil.rmtree(dest)
         os.chdir("../")
         
-        print()
-        input("Press the <Enter> key to next student...")
+        if not input_thread.is_alive():
+            input_thread.join()
+            input(colored("Press the <Enter> key to continue...", "yellow"))
+            input_thread = threading.Thread(target=detect_break)
+            input_thread.start()
+        else:
+            print()
 
