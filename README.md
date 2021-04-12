@@ -29,7 +29,6 @@ import zipFile[python version num] as zipFile
 ...
 
 folderPath = <your own path to hw_dir>
-startFrom = <the index of starting student>
 
 ...
 
@@ -38,5 +37,6 @@ ret = subprocess.Popen("okular", pdf)   # change "okular" to "evince" depends on
 
 3. Run the program
 ```
-python3 HWscript.py
+python3 HWscript.py 1
 ```
+- "1" represent the index of starting student, from 1 to N

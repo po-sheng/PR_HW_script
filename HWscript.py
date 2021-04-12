@@ -1,4 +1,5 @@
 import os
+import sys
 import glob
 import shutil
 import rarfile
@@ -26,12 +27,16 @@ def unrar(fileName, dest):
     os.chdir(dest)
 
 if __name__ == "__main__":
+    startFrom = int(sys.argv[1])    # start from which student
+
 #     folderPath = "../hw_test"
     folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
-    startFrom = 8               # start from first student
     os.chdir(folderPath)
 
     folders = sorted(os.listdir("."))
+    if startFrom <= 0 or startFrom > len(folders):
+        print(colored("The range of index should be between [1, {}]".format(len(folders)), "red"))
+        exit()
     for i, folder in enumerate(folders):
         if i+1 < startFrom:
             continue
