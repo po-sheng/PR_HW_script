@@ -30,7 +30,8 @@ if __name__ == "__main__":
     try:
         startFrom = int(sys.argv[1])    # start from which student
     except:
-        print(colored("You should specify the int index of student to start as argv!", "red"))
+        print(colored("You should specify the int index of student to start from as an argv!", "red"))
+        exit()
 
 #     folderPath = "../hw_test"
     folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
