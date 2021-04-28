@@ -162,6 +162,14 @@ if __name__ == "__main__":
                 ret = subprocess.run(["ipynb-py-convert", nb, py])
             except:
                 print(colored("Error when converting .ipynb to .py!", "red"))
+        
+        # check for the using of sklearn
+        print("\tChecking code using sklearn...")
+        with open(py, "r") as f:
+            lines = f.readlines()
+            for i, line in enumerate(lines):
+                if line.find("sklearn") != -1:
+                    print(colored("\t\tLine " + i + ": " + line, "yellow"), sep='')
 
         # check if code meet PEP8 require
         if os.path.exists(py):
