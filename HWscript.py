@@ -58,7 +58,8 @@ if __name__ == "__main__":
         exit()
 
     # set path
-    folderPath = "/mnt/c/Users/bensonliu/Desktop/pr_TA/HW1/HW1_Regression"
+    folderPath = "/mnt/c/Users/劉柏聲/Desktop/PR_TA/HW3/HW3_Ensemble_Methods"
+    workSpace = "/mnt/c/Users/劉柏聲/Desktop/PR_TA/HW3/work_space"
     os.chdir(folderPath)
     
     # set signal handler
@@ -163,13 +164,19 @@ if __name__ == "__main__":
             except:
                 print(colored("Error when converting .ipynb to .py!", "red"))
         
+        # move .py file to work space
+        if os.path.exists(py):
+            shutil.copy(py, os.path.join(workSpace, "hw.py"))
+        else:
+            shutil.rmtree(os.path.join(workSpace, "hw.py"))
+
         # check for the using of sklearn
         print("\tChecking code using sklearn...")
         with open(py, "r") as f:
             lines = f.readlines()
             for i, line in enumerate(lines):
                 if line.find("sklearn") != -1:
-                    print(colored("\t\tLine " + i + ": " + line, "yellow"), sep='')
+                    print(colored("\t\tLine " + str(i) + ": " + line, "yellow"), sep='')
 
         # check if code meet PEP8 require
         if os.path.exists(py):
